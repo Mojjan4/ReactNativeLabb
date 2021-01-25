@@ -1,21 +1,35 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
+import { AppearanceProvider, useColorScheme } from 'react-native-appearance';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import FetchData from './components/FetchData/Fetchdata';
+import Index from './components/Device/Index';
+import Home from './components/Home/Home';
+import About from './components/About/About';
+import Calender from './components/Calender/Calender';
+
+//Drawer that works in ios and android. 
+const Drawer = createDrawerNavigator();
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+  const scheme = useColorScheme();
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+    return (
+      <AppearanceProvider>
+        <NavigationContainer theme={scheme === 'dark' ? DarkTheme : DefaultTheme}> 
+          <Drawer.Navigator initialRouteName="Home">
+            <Drawer.Screen name="Home" component={Home}/>
+            <Drawer.Screen name="Drink and food recipe" component={FetchData}/>
+            <Drawer.Screen name="Device" component={Index}/>
+            <Drawer.Screen name="About" component={About}/>
+            <Drawer.Screen name="Calender" component={Calender}/>
+          </Drawer.Navigator>
+        </NavigationContainer>   
+      </AppearanceProvider>
+    );
+  }
+
+
+
+
+
